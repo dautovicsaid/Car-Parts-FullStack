@@ -15,6 +15,8 @@ class BrandService
     use ImageTrait;
 
     /**
+     *  Returns BrandResource collection with image
+     *
      * @param Request $request
      * @return AnonymousResourceCollection
      */
@@ -24,22 +26,47 @@ class BrandService
 
     }
 
+    /**
+     *  Store a newly created brand in database with image if it's present.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function store(Request $request) : void
     {
         $brand = Brand::create($request->validated());
         if($request->hasFile('image')) $this->storeImage($request->file('image'),$brand->id,'Brands',Brand::class);
     }
 
+    /**
+     *  Returns BrandResource with image
+     *
+     * @param Brand $brand
+     * @return BrandResource
+     */
     public function edit(Brand $brand) : BrandResource
     {
         return BrandResource::make($brand->load('image'));
     }
 
+    /**
+     *  Returns BrandResource with image
+     *
+     * @param Brand $brand
+     * @return BrandResource
+     */
     public function show(Brand $brand) : BrandResource
     {
         return BrandResource::make($brand->load('image'));
     }
 
+    /**
+     *  Update the specified brand in database with image if it's present.
+     *
+     * @param Request $request
+     * @param Brand $brand
+     * @return void
+     */
     public function update(Request $request, Brand $brand) : void
     {
         $brand->update($request->validated());
@@ -49,6 +76,12 @@ class BrandService
         }
     }
 
+    /**
+     *  Remove the specified brand from database with image if it's present.
+     *
+     * @param Brand $brand
+     * @return void
+     */
     public function destroy(Brand $brand) : void
     {
         if($brand->image) $this->deleteImage($brand);
@@ -56,6 +89,8 @@ class BrandService
     }
 
     /**
+     *  Returns collection of brands with id and name
+     *
      * @return Collection
      */
     public static function getBrands(): Collection

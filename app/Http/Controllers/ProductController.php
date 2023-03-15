@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProductController extends Controller
 {
@@ -25,6 +26,8 @@ class ProductController extends Controller
     }
 
     /**
+     *  Display a listing of the resource.
+     *
      * @param Request $request
      * @return Response
      */
@@ -44,6 +47,8 @@ class ProductController extends Controller
     }
 
     /**
+     *  Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create() : Response
@@ -56,6 +61,8 @@ class ProductController extends Controller
 
 
     /**
+     *  Store a newly created resource in storage.
+     *
      * @param StoreProductRequest $request
      * @return RedirectResponse
      */
@@ -66,6 +73,8 @@ class ProductController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
      * @param Product $product
      * @return Response
      */
@@ -79,6 +88,8 @@ class ProductController extends Controller
     }
 
     /**
+     *  Display the specified resource.
+     *
      * @param Product $product
      * @return Response
      */
@@ -94,6 +105,8 @@ class ProductController extends Controller
     }
 
     /**
+     *  Update the specified resource in storage.
+     *
      * @param UpdateProductRequest $request
      * @param Product $product
      * @return RedirectResponse
@@ -105,6 +118,8 @@ class ProductController extends Controller
     }
 
     /**
+     *  Remove the specified resource from storage.
+     *
      * @param Product $product
      * @return RedirectResponse
      */
@@ -114,7 +129,12 @@ class ProductController extends Controller
         return to_route('products.index')->with('success', 'Product deleted successfully');
     }
 
-    public function productsToExcel()
+    /**
+     *  Export products to excel.
+     *
+     * @return BinaryFileResponse
+     */
+    public function productsToExcel() : BinaryFileResponse
     {
         return Excel::download(new ProductsExport(), 'products.xlsx');
     }

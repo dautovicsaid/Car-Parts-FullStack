@@ -18,6 +18,8 @@ class ProductCategoryService
 {
 
     /**
+     *  Returns ProductCategoryResource collection
+     *
      * @param Request $request
      * @return AnonymousResourceCollection
      */
@@ -28,6 +30,8 @@ class ProductCategoryService
 
 
     /**
+     *  Store a newly created product category in database
+     *
      * @param Request $request
      * @return void
      */
@@ -37,26 +41,56 @@ class ProductCategoryService
     }
 
 
+    /**
+     *  Returns ProductCategoryResource
+     *
+     * @param ProductCategory $productCategory
+     * @return ProductCategoryResource
+     */
     public function show(ProductCategory $productCategory) : ProductCategoryResource
     {
         return ProductCategoryResource::make($productCategory);
     }
 
+    /**
+     *  Returns ProductCategoryResource
+     *
+     * @param ProductCategory $productCategory
+     * @return ProductCategoryResource
+     */
     public function edit(ProductCategory $productCategory) : ProductCategoryResource
     {
         return ProductCategoryResource::make($productCategory);
     }
 
+    /**
+     *  Update the specified product category in database
+     *
+     * @param Request $request
+     * @param ProductCategory $productCategory
+     * @return void
+     */
     public function update(Request $request, ProductCategory $productCategory) : void
     {
         $productCategory->update($request->validated());
     }
 
+    /**
+     *  Remove the specified product category from database
+     *
+     * @param ProductCategory $productCategory
+     * @return void
+     */
     public function destroy(ProductCategory $productCategory) : void
     {
         $productCategory->delete();
     }
 
+    /**
+     * Returns product categories collection
+     *
+     * @return Collection
+     */
     public static function getCategories() : Collection
     {
         return ProductCategory::query()->orderBy('id','desc')->get(['name','id']);

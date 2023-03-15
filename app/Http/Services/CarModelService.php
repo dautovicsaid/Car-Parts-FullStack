@@ -17,6 +17,8 @@ class CarModelService
     use ImageTrait;
 
     /**
+     *  Returns CarModelResource collection with image and brand
+     *
      * @param Request $request
      * @return AnonymousResourceCollection
      */
@@ -36,6 +38,8 @@ class CarModelService
     }
 
     /**
+     *  Store a newly created car model in database with image if it's present.
+     *
      * @param Request $request
      * @return void
      */
@@ -46,6 +50,8 @@ class CarModelService
     }
 
     /**
+     *  Returns CarModelResource with image and brand
+     *
      * @param CarModel $carModel
      * @return CarModelResource
      */
@@ -54,12 +60,20 @@ class CarModelService
         return CarModelResource::make($carModel->load('image', 'brand'));
     }
 
+    /**
+     *  Returns CarModelResource with image and brand
+     *
+     * @param CarModel $carModel
+     * @return CarModelResource
+     */
     public function edit(CarModel $carModel): CarModelResource
     {
         return CarModelResource::make($carModel->load('image', 'brand'));
     }
 
     /**
+     *  Update the specified car model in database with image if it's present.
+     *
      * @param Request $request
      * @param CarModel $carModel
      * @return void
@@ -74,6 +88,8 @@ class CarModelService
     }
 
     /**
+     *  Remove the specified car model from database with image if it's present.
+     *
      * @param CarModel $carModel
      * @return void
      */
@@ -83,6 +99,12 @@ class CarModelService
         $carModel->delete();
     }
 
+    /**
+     *  Returns car models by brand
+     *
+     * @param Brand $brand
+     * @return Collection
+     */
     public function getCarModelsByBrand(Brand $brand) : Collection
     {
         return $brand->carModels;

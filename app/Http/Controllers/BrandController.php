@@ -21,6 +21,8 @@ class BrandController extends Controller
     }
 
     /**
+     *  Display a listing of the resource.
+     *
      * @param Request $request
      * @return Response
      */
@@ -41,6 +43,8 @@ class BrandController extends Controller
     }
 
     /**
+     *  Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create(): Response
@@ -49,6 +53,8 @@ class BrandController extends Controller
     }
 
     /**
+     *  Store a newly created resource in storage.
+     *
      * @param StoreBrandRequest $request
      * @return RedirectResponse
      */
@@ -58,6 +64,12 @@ class BrandController extends Controller
         return to_route('brands.index')->with('success', 'Brand created successfully');
     }
 
+    /**
+     *  Display the specified resource.
+     *
+     * @param Brand $brand
+     * @return Response
+     */
     public function show(Brand $brand) : Response
     {
         return Inertia::render('Brands/Show', [
@@ -69,6 +81,12 @@ class BrandController extends Controller
         ]);
     }
 
+    /**
+     *  Show the form for editing the specified resource.
+     *
+     * @param Brand $brand
+     * @return Response
+     */
     public function edit(Brand $brand): Response
     {
         return Inertia::render('Brands/Edit', [
@@ -76,12 +94,23 @@ class BrandController extends Controller
         ]);
     }
 
+    /**
+     *  Update the specified resource in database.
+     *
+     * @param UpdateBrandRequest $request
+     * @param Brand $brand
+     * @return RedirectResponse
+     */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
         $this->brandService->update($request, $brand);
         return to_route('brands.index')->with('success', 'Brand updated successfully');
     }
 
+    /**
+     * @param Brand $brand
+     * @return RedirectResponse
+     */
     public function destroy(Brand $brand)
     {
         $this->brandService->destroy($brand);

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Http\Services\OrderService;
-use App\Mail\OrderConfirmedMail;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use App\Notifications\OrderConfirmedNotification;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -19,47 +18,59 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function addToCart(Request $request, Product $product)
+    /**
+     *  Adds product to cart
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function addToCart(Request $request, Product $product) : JsonResponse
     {
-
-        $order = Order::where('user_id', auth()->id())->whereNull('ordered_at')->firstOrCreate([
-            'user_id' => auth()->id(),
-        ]);
-        OrderItem::query()->create([
-            'quantity' => $request->get('quantity'),
-            'product_id' => $product->id,
-            'order_id' => $order->id,
-        ]);
-
-
+        $this->orderService->addToCart($request, $product);
         return response()->json([
             'success' => true,
             'message' => 'Product added to cart',
         ], 200);
     }
 
-    public function showCart()
+    /**
+     *  Returns OrderResource of cart
+     *
+     * @return OrderResource
+     */
+    public function showCart() : OrderResource
     {
         return $this->orderService->showCart();
     }
 
-    public function removeFromCart(Order $order,OrderItem $orderItem)
+    /**
+     *  Removes item from cart
+     *
+     * @param Order $order
+     * @param OrderItem $orderItem
+     * @return JsonResponse
+     */
+    public function removeFromCart(Order $order, OrderItem $orderItem) : JsonResponse
     {
         $orderItem->delete();
         return response()->json([
             'success' => true,
-            'message' => 'Product removed from cart',
+            'message' => 'Item removed from cart',
         ]);
     }
 
 
-    public function confirm(Request $request, Order $order)
+    /**
+     *  Confirms order and sends email to user
+     *
+     * @param Request $request
+     * @param Order $order
+     * @return JsonResponse
+     */
+    public function confirm(Request $request, Order $order) : JsonResponse
     {
-        $order->update([
-            'ordered_at' => now(),
-            'total_price' => $request->total_price,
-        ]);
-        Mail::to(auth()->user())->queue(new OrderConfirmedMail($order));
+        $this->orderService->confirm($request, $order);
 
         return response()->json([
             'success' => true,

@@ -20,6 +20,8 @@ class ProductCategoryController extends Controller
 
 
     /**
+     *  Display a listing of the resource.
+     *
      * @param Request $request
      * @return Response
      */
@@ -39,6 +41,8 @@ class ProductCategoryController extends Controller
     }
 
     /**
+     *  Show the form for creating a new resource.
+     *
      * @return Response
      */
     public function create() : Response
@@ -46,6 +50,12 @@ class ProductCategoryController extends Controller
         return Inertia::render('ProductCategories/Create');
     }
 
+    /**
+     *  Store a newly created resource in database.
+     *
+     * @param StoreProductCategoryRequest $request
+     * @return RedirectResponse
+     */
     public function store(StoreProductCategoryRequest $request) : RedirectResponse
     {
         $this->productCategoryService->store($request);
@@ -53,6 +63,12 @@ class ProductCategoryController extends Controller
         return to_route('product-categories.index')->with('success', 'Product category created successfully');
     }
 
+    /**
+     *  Display the specified resource.
+     *
+     * @param ProductCategory $productCategory
+     * @return Response
+     */
     public function show(ProductCategory $productCategory) : Response
     {
         return Inertia::render('ProductCategories/Show', [
@@ -64,6 +80,12 @@ class ProductCategoryController extends Controller
             ]);
     }
 
+    /**
+     *  Show the form for editing the specified resource.
+     *
+     * @param ProductCategory $productCategory
+     * @return Response
+     */
     public function edit(ProductCategory $productCategory) : Response
     {
         return Inertia::render('ProductCategories/Edit', [
@@ -71,6 +93,13 @@ class ProductCategoryController extends Controller
         ]);
     }
 
+    /**
+     *  Update the specified resource in database.
+     *
+     * @param StoreProductCategoryRequest $request
+     * @param ProductCategory $productCategory
+     * @return RedirectResponse
+     */
     public function update(StoreProductCategoryRequest $request, ProductCategory $productCategory) : RedirectResponse
     {
         $this->productCategoryService->update($request, $productCategory);
@@ -78,6 +107,12 @@ class ProductCategoryController extends Controller
     }
 
 
+    /**
+     *  Remove the specified resource from database.
+     *
+     * @param ProductCategory $productCategory
+     * @return RedirectResponse
+     */
     public function destroy(ProductCategory $productCategory) : RedirectResponse
     {
         $this->productCategoryService->destroy($productCategory);

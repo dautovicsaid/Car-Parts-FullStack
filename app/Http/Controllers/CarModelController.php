@@ -58,7 +58,7 @@ class CarModelController extends Controller
 
 
     /**
-     *  Store a newly created resource in storage.
+     *  Store a newly created resource in database.
      *
      * @param StoreCarModelRequest $request
      * @return RedirectResponse
