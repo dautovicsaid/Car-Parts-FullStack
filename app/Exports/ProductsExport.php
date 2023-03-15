@@ -16,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ProductsExport implements WithColumnWidths,ShouldAutoSize, FromView, WithStyles, WithColumnFormatting, WithEvents
+class ProductsExport implements WithColumnWidths,ShouldAutoSize, FromView, WithStyles, WithEvents
 {
     public function columnWidths(): array
     {
@@ -33,12 +33,6 @@ class ProductsExport implements WithColumnWidths,ShouldAutoSize, FromView, WithS
         $sheet->getStyle('A1:Z100')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
     }
 
-    public function columnFormats(): array
-    {
-        return [
-            'B' => NumberFormat::FORMAT_TEXT,
-        ];
-    }
 
     public function view() : View
     {

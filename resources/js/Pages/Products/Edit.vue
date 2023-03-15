@@ -2,7 +2,7 @@
     <div class="w-3/4 mx-auto bg-white shadow-md rounded-lg p-6">
         <form @submit.prevent="form.post(route('products.update', { product: product.data.id }))">
             <div class="flex justify-between">
-                <div class="space-y-5 w-full px-4">
+                <div class="space-y-5 w-full pr-6">
                     <div class="flex justify-between items-center">
                         <div>
                             <InputLabel for="name" value="Name"/>
