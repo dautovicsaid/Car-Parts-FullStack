@@ -9,6 +9,22 @@
                 <p v-if="product.data.description" class="text-gray-700 text-base">
                     {{ product.data.description }}
                 </p>
+                <div class="flex justify-between w-3/4 mt-3">
+                    <p  class="text-gray-700 text-base">
+                        Model: {{ `${product.data.model} ${product.data.brand}` }}
+                    </p>
+                    <p  class="text-gray-700 text-base">
+                        Price: {{ product.data.price}} €
+                    </p>
+                </div>
+                <div class="flex justify-between w-3/4 mt-3">
+                    <p  class="text-gray-700 text-base">
+                        Year from: {{ product.data.year_from }}
+                    </p>
+                    <p  class="text-gray-700 text-base">
+                       Year to: {{ product.data.year_to }}
+                    </p>
+                </div>
             </div>
             <div class="flex gap-3 px-6 py-4">
                 <Link v-if="can.update" :href="`${$page.url}/edit`">

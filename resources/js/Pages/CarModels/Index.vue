@@ -41,6 +41,7 @@ let props = defineProps({
 const columns = [
     'id',
     'name',
+    'description',
     'brand',
 ];
 
