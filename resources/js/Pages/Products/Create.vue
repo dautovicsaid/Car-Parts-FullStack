@@ -1,6 +1,6 @@
 <template>
     <Head title="Create Product"/>
-    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md">
+    <div class="mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
         <form @submit.prevent="form.post(route('products.store'))" class="space-y-5">
             <div class="flex justify-between">
                 <div class="mr-3 w-1/2">
@@ -53,9 +53,9 @@
                 @update-value-brand="(value) => {form.brand_id = value}"
             />
             <div v-if="carModels.length" class="col-span-6 sm:col-span-3">
-                <label for="model_id" class="block text-sm font-medium leading-6 text-gray-900">Model</label>
+                <label for="model_id" class="block text-sm dark:text-gray-200 font-medium leading-6 text-gray-900">Model</label>
                 <select v-model="form.model_id" id="model_id" name="model_id" autocomplete="model_id"
-                        class="mt-2 block w-full rounded-md border-0 bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 py-1.5 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        class="mt-2 block w-full rounded-md border-0 dark:border-gray-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 py-1.5 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     <option value="" disabled selected>Select</option>
                     <option v-for="carModel in carModels" :value="carModel.id">{{ carModel.name }}</option>
                 </select>

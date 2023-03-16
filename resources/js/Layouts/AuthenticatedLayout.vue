@@ -7,6 +7,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import {Link} from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
+
 import Cart from "@/Components/Cart.vue";
 
 const showingNavigationDropdown = ref(false);
@@ -57,8 +58,8 @@ watchEffect(() => {
 
 <template>
     <div class="min-h-screen bg-gray-100">
-        <div class="min-h-screen bg-gray-100">
-            <nav class="border-b border-gray-100 bg-white">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            <nav class="border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
@@ -67,7 +68,7 @@ watchEffect(() => {
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
+                                        class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
                                     />
                                 </Link>
                             </div>
@@ -105,7 +106,7 @@ watchEffect(() => {
                         <div class="hidden sm:ml-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
                             <div class="relative">
-                            <button v-if="$page.props.auth.user.can.shop" class="cursor-pointer">
+                            <button v-if="$page.props.auth.user.can.shop" class="cursor-pointer dark:text-white">
                                 <svg @click="showingCartSlider = true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                      viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
@@ -121,7 +122,7 @@ watchEffect(() => {
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                                                class="inline-flex items-center rounded-md border border-transparent bg-white dark:bg-gray-800 px-3 py-2 text-sm font-medium leading-4 text-gray-500 dark:text-gray-400 transition duration-150 ease-in-out hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none"
                                             >
                                                 {{ $page.props.auth.user.name }}
 
@@ -155,7 +156,7 @@ watchEffect(() => {
                         <div class="-mr-2 flex items-center sm:hidden">
                             <button
                                 @click="showingNavigationDropdown = true"
-                                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
+                                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 dark:text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 dark:hover-bg-gray-900 hover:text-gray-500 dark:hover:text-gray-400 focus:bg-gray-100 dark:focus-bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 focus:outline-none"
                             >
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -207,9 +208,9 @@ watchEffect(() => {
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="border-t border-gray-200 pt-4 pb-1">
+                    <div class="border-t border-gray-200 dark:border-gray-600 pt-4 pb-1">
                         <div class="px-4">
-                            <div class="text-base font-medium text-gray-800">
+                            <div class="text-base font-medium text-gray-800 dark:text-gray-200">
                                 {{ $page.props.auth.user.name }}
                             </div>
                             <div class="text-sm font-medium text-gray-500">{{ $page.props.auth.user.email }}</div>
@@ -226,9 +227,9 @@ watchEffect(() => {
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow">
+            <header class="bg-white dark:bg-gray-800 shadow">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                    <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                    <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-400">
                         {{ $page.component.split('/')[0] }}</h2>
                 </div>
             </header>

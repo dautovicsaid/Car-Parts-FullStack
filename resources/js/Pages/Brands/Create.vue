@@ -1,6 +1,6 @@
 <template>
     <Head title="Create Brand"/>
-    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md">
+    <div class="mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
         <form @submit.prevent="form.post(route('brands.store'))" class="space-y-5">
             <div>
                 <InputLabel for="name" value="Name"/>

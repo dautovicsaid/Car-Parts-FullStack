@@ -1,6 +1,6 @@
 <template>
     <Head title="Edit Product"/>
-    <div class="mx-auto w-3/4 rounded-lg bg-white p-6 shadow-md">
+    <div class="mx-auto w-3/4 rounded-lg dark:bg-gray-800 bg-white p-6 shadow-md">
         <form @submit.prevent="form.post(route('products.update', { product: product.data.id }))">
             <div class="flex justify-between">
                 <div class="w-full pr-6 space-y-5">
@@ -15,10 +15,12 @@
                                 autofocus
                                 autocomplete="name"
                             />
+
                             <InputError class="mt-2" :message="form.errors.name"/>
                         </div>
                         <div class="w-1/2">
                             <InputLabel for="price" value="Price"/>
+
                             <TextInput
                                 id="price"
                                 type="number"
@@ -57,9 +59,9 @@
                         @update-value-brand="(value) => {form.brand_id = value}"
                     />
                     <div v-if="carModels.length" class="col-span-6 sm:col-span-3">
-                        <label for="model_id" class="block text-sm font-medium leading-6 text-gray-900">Model</label>
+                        <label for="model_id" class="block text-sm dark:text-gray-300 font-medium leading-6 text-gray-900">Model</label>
                         <select v-model="form.model_id" id="model_id" name="model_id" autocomplete="model_id"
-                                class="mt-2 block w-full rounded-md border-0 bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 py-1.5 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                class="mt-2 block w-full dark:border-gray-500 dark:bg-gray-900 dark:text-gray-300 rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                             <option value="" disabled>Select</option>
                             <option v-for="carModel in carModels"
                                     :value="carModel.id">
@@ -115,8 +117,6 @@ import InputLabel from "@/Components/InputLabel.vue";
 import {useForm} from "@inertiajs/vue3";
 import {onBeforeMount, ref, watch} from "vue";
 import axios from "axios";
-import ImageInput from "@/Components/ImageInput.vue";
-import SelectInput from "@/Components/SelectInput.vue";
 
 let props = defineProps({
     product: {

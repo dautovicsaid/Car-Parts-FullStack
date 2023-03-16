@@ -9,7 +9,8 @@ import ProductCard from "@/Components/ProductCard.vue";
 
 defineProps({
     products : {
-        type: Array,
+        type: Object,
+
         required: true,
     },
 })

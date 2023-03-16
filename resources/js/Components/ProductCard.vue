@@ -9,34 +9,34 @@
             <a href="#">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ product.name }}</h5>
             </a>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-300">
                 {{ product.description ? truncateString(product.description, 30) : 'No description' }}</p>
             <div class="flex justify-between">
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Model:
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-300">Model:
                     {{ `${product.brand} ${product.model} ` }}</p>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ `Price: ${product.price} €` }}</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-300">{{ `Price: ${product.price} €` }}</p>
             </div>
             <div class="flex justify-between">
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ `Min year: ${product.year_from}` }}</p>
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ `Max year: ${product.year_to}` }}</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-300">{{ `Min year: ${product.year_from}` }}</p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-300">{{ `Max year: ${product.year_to}` }}</p>
             </div>
             <form @submit.prevent="addToCart">
                 <div class="my-3 inline-flex">
-                    <div class="cursor-pointer select-none rounded-l border bg-gray-100 px-4 py-2 hover:bg-gray-200"
+                    <div class="cursor-pointer select-none rounded-l border bg-gray-100 dark:bg-gray-800 dark:text-gray-300 px-4 py-2 hover:bg-gray-700"
                          @click="decrease">
                         -
                     </div>
 
-                    <input disabled class="border p-2 text-center outline-none" type="number" v-model="form.quantity"
+                    <input disabled class="border p-2 dark:bg-gray-900 dark:text-gray-200 text-center outline-none" type="number" v-model="form.quantity"
                            :name="quantity"/>
 
-                    <div class="cursor-pointer select-none rounded-r border bg-gray-100 px-4 py-2 hover:bg-gray-200"
+                    <div class="cursor-pointer select-none rounded-r border bg-gray-100 dark:bg-gray-800 px-4 py-2 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
                          @click="increase">
                         +
                     </div>
                 </div>
                 <button
-                    class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                    class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 dark:bg-sky-500 px-6 py-3 text-base font-medium text-white dark:text-gray-800 shadow-sm hover:bg-sky-400">
                     Add to cart
                     <svg aria-hidden="true" class="-mr-1 ml-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
@@ -60,13 +60,17 @@ let props = defineProps(
         product: {
             type: Object,
             required: true
+        },
+        quantity: {
+            type: Number,
+            default : 1
         }
     }
 )
 
 let form = useForm({
     product_id: props.product.id,
-    quantity: 1
+    quantity: props.quantity,
 })
 
 let truncateString = (str, num) => {

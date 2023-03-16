@@ -1,6 +1,6 @@
 <template>
     <Head title="Create Product Category"/>
-    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md">
+    <div class="mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
         <form @submit.prevent="form.post(route('product-categories.store'))" class="space-y-5">
             <div>
                 <InputLabel for="name" value="Name"/>

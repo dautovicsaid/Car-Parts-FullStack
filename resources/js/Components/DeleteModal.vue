@@ -9,10 +9,10 @@
         </button>
         <Modal :show="confirmingDeletion" @close="closeModal">
             <div class="p-6">
-                <h2 class="text-lg font-medium text-gray-900">
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-200">
                     Are you sure you want to delete?
                 </h2>
-                <p class="mt-1 text-sm text-gray-600">
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                     Once your delete it, all of its resources and data will be permanently deleted.
                 </p>
                 <div class="mt-6 flex justify-end">

@@ -1,6 +1,6 @@
 <template>
     <Head title="Create Car Model"/>
-    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md">
+    <div class="mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
         <form @submit.prevent="form.post(route('car-models.store'))" class="space-y-5">
             <div>
                 <InputLabel for="name" value="Name"/>
@@ -24,6 +24,7 @@
                     class="mt-1 block w-full"
                     v-model="form.description"
                 />
+
                 <InputError class="mt-2" :message="form.errors.description"/>
             </div>
             <SelectInput name="brand" :collection="brands" :error="form.errors.brand_id" emit="update-value"

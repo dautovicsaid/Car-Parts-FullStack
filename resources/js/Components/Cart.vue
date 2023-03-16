@@ -27,14 +27,14 @@
                         To: "translate-x-full"
                     -->
                     <div class="pointer-events-auto w-screen max-w-md">
-                        <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                        <div class="flex h-full flex-col overflow-y-scroll bg-white dark:bg-gray-800 shadow-xl">
                             <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                                 <div class="flex items-start justify-between">
-                                    <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+                                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-300" id="slide-over-title">
                                         Shopping cart</h2>
                                     <div class="ml-3 flex h-7 items-center">
                                         <button type="button"
-                                                class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                                                class="-m-2 p-2 text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400">
                                             <span class="sr-only">Close panel</span>
                                             <svg @click="closeCartSlider" class="h-6 w-6" fill="none"
                                                  viewBox="0 0 24 24" stroke-width="1.5"
@@ -49,34 +49,28 @@
                                 <div class="mt-8">
                                     <div class="flow-root">
                                         <ul v-if="hasOrderItems" role="list"
-                                            class="-my-6 divide-y divide-gray-200">
+                                            class="-my-6 divide-y divide-gray-200 dark:divide-gray-500">
                                             <li v-for="orderItem in order.data.order_items"
                                                 class="flex py-6">
                                                 <div
-                                                    class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                                    class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-500">
                                                     <img :src="orderItem.product.image.path"
-                                                         alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
+                                                         :alt="orderItem.product.image.name"
                                                          class="h-full w-full object-cover object-center">
                                                 </div>
 
                                                 <div class="ml-4 flex flex-1 flex-col">
                                                     <div>
                                                         <div
-                                                            class="flex justify-between text-base font-medium text-gray-900">
+                                                            class="flex justify-between text-base font-medium text-gray-900 dark:text-gray-300">
                                                             <h3>
-                                                                <a href="#">{{
-                                                                        orderItem.product.name
-                                                                    }}</a>
+                                                                <a href="#">{{orderItem.product.name}}</a>
                                                             </h3>
                                                             <p class="ml-4">
                                                                 {{ orderItem.product.price * orderItem.quantity }} €</p>
                                                         </div>
-                                                        <p class="mt-1 text-sm text-gray-500">{{
-                                                                `${orderItem.product.brand} ${orderItem.product.model}`
-                                                            }}</p>
-                                                        <p class="mt-1 text-sm text-gray-500">{{
-                                                                `${orderItem.product.year_from} - ${orderItem.product.year_to}`
-                                                            }}</p>
+                                                        <p class="mt-1 text-sm text-gray-500">{{`${orderItem.product.brand} ${orderItem.product.model}`}}</p>
+                                                        <p class="mt-1 text-sm text-gray-500">{{`${orderItem.product.year_from} - ${orderItem.product.year_to}`}}</p>
                                                     </div>
                                                     <div
                                                         class="flex flex-1 items-end justify-between text-sm">
@@ -85,7 +79,7 @@
 
                                                         <div class="flex">
                                                             <button @click="removeFromCart(orderItem.id)" type="button"
-                                                                    class="font-medium text-indigo-600 hover:text-indigo-500">
+                                                                    class="font-medium text-indigo-600 dark:text-sky-500 hover:text-indigo-500 dark:hover:text-sky-400">
                                                                 Remove
                                                             </button>
                                                         </div>
@@ -94,14 +88,14 @@
                                             </li>
                                         </ul>
                                         <div v-else>
-                                            <div class="flex flex-col items-center justify-center" :class="{'mt-80' : !hasOrderItems }">
+                                            <div class="flex flex-col items-center justify-center" :class="{'xl:mt-40 3xl:mt-80' : !hasOrderItems }">
                                                 <div>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-24 w-24">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-24 w-24 dark:text-gray-300">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                                                     </svg>
                                                 </div>
                                                 <div class="my-auto flex flex-col items-center">
-                                                    <h3 class="mt-2 text-sm font-medium text-gray-900">
+                                                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                                         Your cart is empty
                                                     </h3>
                                                 </div>
@@ -114,19 +108,19 @@
                             <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
                                 <div v-if="hasOrderItems ">
                                     <div
-                                         class="flex justify-between text-base font-medium text-gray-900">
+                                         class="flex justify-between text-base font-medium text-gray-900 dark:text-gray-300">
                                         <p>Subtotal</p>
                                         <p>{{ order.data.subtotal }} €</p>
                                     </div>
                                     <div class="mt-6">
                                         <a @click="confirmOrder"
-                                           class="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Confirm</a>
+                                           class="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 dark:bg-sky-600 px-6 py-3 text-base font-medium text-white dark:text-gray-800 shadow-sm hover:bg-indigo-700 dark:hover:bg-sky-500">Confirm</a>
                                     </div>
                                 </div>
                                 <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                     <p>
                                         <button @click="closeCartSlider" type="button"
-                                                class="font-medium text-indigo-600 hover:text-indigo-500">
+                                                class="font-medium text-indigo-600 dark:text-sky-500 hover:text-indigo-500 dark:hover:text-sky-400">
                                             Continue Shopping
                                             <span aria-hidden="true"> &rarr;</span>
                                         </button>

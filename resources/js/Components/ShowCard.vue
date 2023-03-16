@@ -1,8 +1,8 @@
 <template>
 
-    <div class="mx-auto max-w-lg">
+    <div class="mx-auto max-w-lg dark:text-gray-300">
         <h1 class="mb-4 text-3xl font-bold">Details</h1>
-        <div class="max-w-xl overflow-hidden rounded shadow-lg">
+        <div class="max-w-xl overflow-hidden rounded shadow-lg dark:shadow-gray-700">
             <slot/>
             <div class="flex gap-3 px-6 py-4">
                 <Link v-if="can.update" :href="`${$page.url}/edit`">
