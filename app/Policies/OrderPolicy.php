@@ -40,6 +40,8 @@ class OrderPolicy
     public function confirm(User $user, Order $order)
     {
         $order->user_id == $user->id ? null : abort(Response::HTTP_FORBIDDEN, 'Order does not belong to user');
+        $order->ordered_at ? abort(Response::HTTP_FORBIDDEN, 'Order already confirmed') : null;
+        $order->orderItems->isEmpty() ? abort(Response::HTTP_FORBIDDEN, 'Order is empty') : null;
         return $user->role_id == Role::USER_ID;
     }
 }

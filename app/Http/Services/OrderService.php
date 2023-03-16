@@ -21,7 +21,7 @@ class OrderService
      *
      * @return OrderResource
      */
-    public function showCart() : OrderResource
+    public function showCart(): OrderResource
     {
         return OrderResource::make(
             Order::query()->with('orderItems.product')
@@ -38,7 +38,7 @@ class OrderService
      * @param Product $product
      * @return void
      */
-    public function addToCart(Request $request, Product $product) : void
+    public function addToCart(Request $request, Product $product): void
     {
         $order = Order::where('user_id', auth()->id())->whereNull('ordered_at')->firstOrCreate([
             'user_id' => auth()->id(),
@@ -58,12 +58,23 @@ class OrderService
      * @param Order $order
      * @return void
      */
-    public function confirm(Request $request, Order $order) : void
+    public function confirm(Request $request, Order $order): void
     {
         $order->update([
             'ordered_at' => now(),
             'total_price' => $request->total_price,
         ]);
         Mail::to(auth()->user())->queue(new OrderConfirmedMail($order));
+    }
+
+    public function history()
+    {
+        return OrderResource::collection(
+            Order::query()->with('orderItems.product')
+                ->where('user_id', auth()->id())
+                ->whereNotNull('ordered_at')
+                ->orderBy('id','desc')
+                ->get()
+        );
     }
 }

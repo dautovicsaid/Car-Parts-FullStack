@@ -31,4 +31,3 @@ createInertiaApp({
     },
 });
 
-// TODO: Clean up pages code

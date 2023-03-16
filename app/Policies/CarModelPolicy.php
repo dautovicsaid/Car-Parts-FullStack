@@ -45,13 +45,6 @@ class CarModelPolicy
      */
     public function store(User $user): bool
     {
-        CarModel::query()
-            ->where('name', request()->name)
-            ->where('brand_id', request()->brand_id)
-            ->first()
-            ?
-            abort(Response::HTTP_CONFLICT, 'Car model already exists')
-            : null;
         return $user->role_id == Role::SUPER_ADMIN_ID;
     }
 
@@ -72,13 +65,6 @@ class CarModelPolicy
      */
     public function update(User $user, CarModel $carModel): bool
     {
-        CarModel::query()
-            ->whereNot('id', $carModel->id)
-            ->where('name', request()->name)
-            ->where('brand_id', request()->brand_id)
-            ->first()
-            ? abort(Response::HTTP_CONFLICT, 'Car model already exists')
-            : null;
         return $user->role_id == Role::SUPER_ADMIN_ID;
     }
 

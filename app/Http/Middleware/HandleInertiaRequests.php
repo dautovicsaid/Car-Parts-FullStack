@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Order;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -31,7 +32,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
+        $data = array_merge(parent::share($request), [
             'auth' => [
                 'user' => [
                     'id' => $request->user()?->id,
@@ -42,6 +43,7 @@ class HandleInertiaRequests extends Middleware
                         'admin' => fn() => $request->user()?->role_id == Role::ADMIN_ID || $request->user()?->role_id == Role::SUPER_ADMIN_ID,
                     ]],
             ],
+
             'ziggy' => function () use ($request) {
         return array_merge((new Ziggy)->toArray(), [
             'location' => $request->url(),
@@ -52,5 +54,15 @@ class HandleInertiaRequests extends Middleware
         'error' => fn() => $request->session()->get('error'),
     ]
         ]);
+        if(auth()->user()){
+            $order = Order::query()
+                ->with('orderItems')
+                ->where('user_id', $request->user()?->id)
+                ->where('ordered_at',null)->firstOrCreate([
+                    'user_id' => $request->user()?->id,
+                ]);
+            $data['order']['items_count'] = count($order->orderItems);
+        }
+        return $data;
     }
 }

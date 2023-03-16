@@ -1,5 +1,6 @@
 <template>
-    <div class="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
+    <Head title="Edit Product Category"/>
+    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md">
         <form @submit.prevent="form.post(route('product-categories.update',{
             productCategory: props.productCategory.data.id
         }))" class="space-y-5">
@@ -40,6 +41,4 @@ let form = useForm(
         name: props.productCategory.data.name,
     }
 )
-
-
 </script>

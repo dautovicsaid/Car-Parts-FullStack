@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ProductNameRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProductRequest extends FormRequest
@@ -23,16 +24,16 @@ class UpdateProductRequest extends FormRequest
     {
         $currentYear = date('Y');
         return [
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'price' => 'required|numeric|min:1',
-            'min_applicable_year' => 'required|integer|min:1900|max:'.$currentYear,
-            'max_applicable_year' => 'required|integer|min:1900|max:'.$currentYear,
-            'category_id' => 'required|integer|exists:product_categories,id',
-            'model_id' => 'required|integer|exists:car_models,id',
-            'brand_id' => 'required|integer|exists:brands,id',
-            'image' => 'nullable|image|max:2048',
-
+            // Unique name for product in model, category, min_applicable_year, max_applicable_year
+            'name' => ['required', 'string', 'max:255', new ProductNameRule],
+            'description' => ['required', 'string', 'max:500'],
+            'price' => ['required', 'numeric', 'min:1'],
+            'min_applicable_year' => ['required', 'integer', 'min:1900', 'max:'.$currentYear],
+            'max_applicable_year' => ['required', 'integer', 'min:1900', 'max:'.$currentYear],
+            'category_id' => ['required', 'integer', 'exists:product_categories,id'],
+            'model_id' => ['required', 'integer', 'exists:car_models,id'],
+            'brand_id' => ['required', 'integer', 'exists:brands,id'],
+            'image' => ['nullable', 'image', 'max:2048'],
         ];
     }
 

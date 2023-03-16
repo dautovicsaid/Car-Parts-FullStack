@@ -1,8 +1,8 @@
 <template>
-    <div class="grid max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="grid max-w-sm rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">
         <div
-            class="flex  px-3 py-3 bg-gray-50 border-b border-gray-200 dark:bg-gray-700 dark:border-gray-600 w-[380px] h-[380px]">
-            <img class="rounded-t-lg object-cover border border-gray-100 shadow-sm rounded" :src="product.image.path"
+            class="flex border-b border-gray-200 bg-gray-50 px-3 py-3 w-[380px] h-[380px] dark:border-gray-600 dark:bg-gray-700">
+            <img class="rounded rounded-t-lg border border-gray-100 object-cover shadow-sm" :src="product.image.path"
                  alt=""/>
         </div>
         <div class="p-5">
@@ -21,8 +21,8 @@
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ `Max year: ${product.year_to}` }}</p>
             </div>
             <form @submit.prevent="addToCart">
-                <div class="inline-flex my-3">
-                    <div class="select-none border py-2 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-l"
+                <div class="my-3 inline-flex">
+                    <div class="cursor-pointer select-none rounded-l border bg-gray-100 px-4 py-2 hover:bg-gray-200"
                          @click="decrease">
                         -
                     </div>
@@ -30,7 +30,7 @@
                     <input disabled class="border p-2 text-center outline-none" type="number" v-model="form.quantity"
                            :name="quantity"/>
 
-                    <div class="select-none border py-2 px-4 cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-r"
+                    <div class="cursor-pointer select-none rounded-r border bg-gray-100 px-4 py-2 hover:bg-gray-200"
                          @click="increase">
                         +
                     </div>
@@ -38,7 +38,7 @@
                 <button
                     class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
                     Add to cart
-                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20"
+                    <svg aria-hidden="true" class="-mr-1 ml-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                               d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
@@ -92,6 +92,7 @@ let addToCart = async () => {
             {quantity: form.quantity,})
         let data = await response.data;
         if (data.success) {
+            usePage().props.order.items_count++;
             form.quantity = 1;
             Swal.fire({
                 title: "Success!",

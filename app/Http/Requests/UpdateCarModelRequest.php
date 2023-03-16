@@ -22,10 +22,11 @@ class UpdateCarModelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'brand_id' => 'required|integer|exists:brands,id',
-            'image' => 'nullable|image|max:2048',
+            // Unique name for car model in brand
+            'name' => ['required', 'string', 'max:255', 'unique:car_models,name,' . $this->carModel->id . ',id,brand_id,' . $this->brand_id],
+            'description' => ['nullable', 'string', 'max:500'],
+            'brand_id' => ['required', 'integer', 'exists:brands,id'],
+            'image' => ['nullable', 'image', 'max:2048'],
         ];
     }
 

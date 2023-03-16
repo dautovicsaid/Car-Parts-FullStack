@@ -45,8 +45,7 @@ class ProductCategoryPolicy
      */
     public function store(User $user): bool
     {
-        ProductCategory::query()->where('name', request()->name)->first() ? abort(Response::HTTP_CONFLICT, 'Product category already exists') : null;
-        return $user->role_id == Role::SUPER_ADMIN_ID;
+       return $user->role_id == Role::SUPER_ADMIN_ID;
     }
 
     /**
@@ -66,7 +65,6 @@ class ProductCategoryPolicy
      */
     public function update(User $user, ProductCategory $productCategory): bool
     {
-        ProductCategory::query()->whereNot('id',$productCategory->id)->where('name', request()->name)->first() ? abort(Response::HTTP_CONFLICT, 'Product category already exists') : null;
         return $user->role_id == Role::SUPER_ADMIN_ID;
     }
 

@@ -138,4 +138,6 @@ class ProductController extends Controller
     {
         return Excel::download(new ProductsExport(), 'products.xlsx');
     }
+
+    //TODO: View product for user
 }

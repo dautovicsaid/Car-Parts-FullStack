@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
@@ -77,6 +78,13 @@ class OrderController extends Controller
             'message' => 'Order confirmed',
         ]);
 
+    }
+
+    public function history()
+    {
+        return Inertia::render('History/Index',[
+            'orders' => $this->orderService->history()
+        ]);
     }
 
 }

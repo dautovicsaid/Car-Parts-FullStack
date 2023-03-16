@@ -45,7 +45,6 @@ class BrandPolicy
      */
     public function store(User $user) : bool
     {
-        Brand::where('name', request()->name)->first() ? abort(Response::HTTP_CONFLICT, 'Brand already exists') : null;
         return $user->role_id == Role::SUPER_ADMIN_ID;
     }
 
@@ -66,8 +65,7 @@ class BrandPolicy
      */
     public function update(User $user, Brand $brand) : bool
     {
-        Brand::query()->whereNot('id',$brand->id)->where('name', request()->name)->first() ? abort(Response::HTTP_CONFLICT, 'Brand already exists') : null;
-        return $user->role_id == Role::SUPER_ADMIN_ID;
+         return $user->role_id == Role::SUPER_ADMIN_ID;
     }
 
     /**

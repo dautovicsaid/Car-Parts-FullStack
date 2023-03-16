@@ -6,6 +6,7 @@ use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductShopResource;
 use App\Http\Services\ProductService;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,9 +22,9 @@ class ShopController extends Controller
     public function index(Request $request) : Response
     {
         return Inertia::render('Shop/Index', [
-            'products' => ProductShopResource::collection(ProductService::productsIndexQuery($request)->get())
+            'products' => ProductShopResource::collection(ProductService::productsIndexQuery($request)->get()),
         ]);
+
     }
 
-    // TODO: Create history page and create method for it
 }

@@ -45,13 +45,6 @@ class ProductPolicy
      */
     public function store(User $user): bool
     {
-        Product::query()
-            ->where('name', request()->name)
-            ->where('category_id', request()->category_id)
-            ->where('model_id' , request()->model_id)
-            ->where('min_applicable_year', request()->min_applicable_year)
-            ->where('max_applicable_year', request()->max_applicable_year)
-            ->first() ? abort(Response::HTTP_CONFLICT, 'Product already exists') : null;
         return $user->role_id == Role::SUPER_ADMIN_ID;
     }
 
@@ -72,14 +65,6 @@ class ProductPolicy
      */
     public function update(User $user, Product $product): bool
     {
-        Product::query()
-            ->whereNot('id', $product->id)
-            ->where('name', request()->name)
-            ->where('category_id', request()->category_id)
-            ->where('model_id' , request()->model_id)
-            ->where('min_applicable_year', request()->min_applicable_year)
-            ->where('max_applicable_year', request()->max_applicable_year)
-            ->first() ? abort(Response::HTTP_CONFLICT, 'Product already exists') : null;
         return $user->role_id == Role::SUPER_ADMIN_ID;
     }
 

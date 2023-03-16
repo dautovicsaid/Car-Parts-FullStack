@@ -1,5 +1,6 @@
 <template>
-    <div class="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
+    <Head title="Create Product Category"/>
+    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md">
         <form @submit.prevent="form.post(route('product-categories.store'))" class="space-y-5">
             <div>
                 <InputLabel for="name" value="Name"/>
@@ -26,6 +27,7 @@ import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import {useForm} from "@inertiajs/vue3";
+
 let form = useForm(
     {
         name: '',
