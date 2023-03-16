@@ -21,6 +21,7 @@ const submit = () => {
 </script>
 
 <script>
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 export default {
     layout: GuestLayout,
 }
