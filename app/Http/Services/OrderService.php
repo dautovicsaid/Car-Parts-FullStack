@@ -9,6 +9,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\OrderItem;
 use App\Traits\ImageTrait;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -67,14 +68,17 @@ class OrderService
         Mail::to(auth()->user())->queue(new OrderConfirmedMail($order));
     }
 
-    public function history()
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function history() : AnonymousResourceCollection
     {
         return OrderResource::collection(
             Order::query()->with('orderItems.product')
                 ->where('user_id', auth()->id())
                 ->whereNotNull('ordered_at')
                 ->orderBy('id','desc')
-                ->get()
+                ->paginate()
         );
     }
 }

@@ -4,22 +4,22 @@
         <img class="w-full" :src="product.data.image.path" alt="Brand image">
         <div class="px-6 py-4">
             <div class="mb-2 text-xl font-bold">{{ product.data.name }}</div>
-            <p v-if="product.data.description" class="text-base text-gray-700">
+            <p v-if="product.data.description" class="text-base text-gray-700 dark:text-gray-500">
                 {{ product.data.description }}
             </p>
             <div class="mt-3 flex w-3/4 justify-between">
-                <p class="text-base text-gray-700">
+                <p class="text-base text-gray-700 dark:text-gray-300">
                     Model: {{ `${product.data.model} ${product.data.brand}` }}
                 </p>
-                <p class="text-base text-gray-700">
+                <p class="text-base text-gray-700 dark:text-gray-300">
                     Price: {{ product.data.price }} €
                 </p>
             </div>
             <div class="mt-3 flex w-3/4 justify-between">
-                <p class="text-base text-gray-700">
+                <p class="text-base text-gray-700 dark:text-gray-300">
                     Year from: {{ product.data.year_from }}
                 </p>
-                <p class="text-base text-gray-700">
+                <p class="text-base text-gray-700 dark:text-gray-300">
                     Year to: {{ product.data.year_to }}
                 </p>
             </div>

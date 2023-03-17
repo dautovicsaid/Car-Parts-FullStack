@@ -1,9 +1,10 @@
 <template>
     <Head title="Product Categories"/>
     <div class="mb-4 flex justify-between">
-        <PrimaryButton v-if="can.create" class="flex items-center">
-            <Link :href="route('product-categories.create')">Create</Link>
-        </PrimaryButton>
+       <div>
+            <CreateButton model-name="product-categories" v-if="can.create"/>
+            <ExportButton model-name="product-categories"/>
+       </div>
         <div class="relative">
             <input v-model="search" type="text" placeholder="Search..."
                    class="rounded-lg border border-gray-400 px-3 py-2 pr-8 focus:border-blue-500 focus:outline-none"/>
@@ -24,6 +25,8 @@ import Table from "@/Components/Table.vue";
 import {defineProps, ref, watch} from "vue";
 import {router} from '@inertiajs/vue3'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import CreateButton from "@/Components/CreateButton.vue";
+import ExportButton from "@/Components/ExportButton.vue";
 
 let props = defineProps({
     productCategories: {

@@ -1,11 +1,11 @@
 <script setup>
-import {ref, watchEffect, onMounted} from 'vue';
+import {ref, watchEffect, onMounted, computed} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import {Link} from '@inertiajs/vue3';
+import {Link, usePage} from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 
 import Cart from "@/Components/Cart.vue";
@@ -16,10 +16,21 @@ const props = defineProps({
     flash: {
         type: Object,
         default: () => ({})
-    }
+    },
 })
 
+const insertBetween = (items, insertion) => {
+    return items.flatMap(
+        (value, index, array) =>
+            array.length - 1 !== index
+                ? [value, insertion]
+                : value,
+    )
+}
 
+const breadcrumbs = computed(() => insertBetween(usePage().props.breadcrumbs || [], '/'))
+
+console.log(breadcrumbs.value)
 onMounted(() => {
     if (props.flash.success) {
         Swal.fire({
@@ -59,7 +70,7 @@ watchEffect(() => {
 <template>
     <div class="min-h-screen bg-gray-100">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav class="border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800">
+            <nav class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
@@ -75,6 +86,10 @@ watchEffect(() => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink v-if="$page.props.auth.user.can.superAdmin" :href="route('users.index')"
+                                         :active="route().current('users.*')">
+                                    Users
+                                </NavLink>
                                 <NavLink v-if="$page.props.auth.user.can.shop" :href="route('shop.index')"
                                          :active="route().current('shop.*')">
                                     Shop
@@ -122,7 +137,7 @@ watchEffect(() => {
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center rounded-md border border-transparent bg-white dark:bg-gray-800 px-3 py-2 text-sm font-medium leading-4 text-gray-500 dark:text-gray-400 transition duration-150 ease-in-out hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none"
+                                                class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
                                             >
                                                 {{ $page.props.auth.user.name }}
 
@@ -156,7 +171,7 @@ watchEffect(() => {
                         <div class="-mr-2 flex items-center sm:hidden">
                             <button
                                 @click="showingNavigationDropdown = true"
-                                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 dark:text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 dark:hover-bg-gray-900 hover:text-gray-500 dark:hover:text-gray-400 focus:bg-gray-100 dark:focus-bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 focus:outline-none"
+                                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:hover-bg-gray-900 dark:focus-bg-gray-900 dark:text-gray-400 dark:hover:text-gray-400 dark:focus:text-gray-400"
                             >
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -208,7 +223,7 @@ watchEffect(() => {
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="border-t border-gray-200 dark:border-gray-600 pt-4 pb-1">
+                    <div class="border-t border-gray-200 pt-4 pb-1 dark:border-gray-600">
                         <div class="px-4">
                             <div class="text-base font-medium text-gray-800 dark:text-gray-200">
                                 {{ $page.props.auth.user.name }}
@@ -227,10 +242,22 @@ watchEffect(() => {
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white dark:bg-gray-800 shadow">
+            <header class="bg-white shadow dark:bg-gray-800">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-400">
-                        {{ $page.component.split('/')[0] }}</h2>
+                        <ol class="flex gap-1">
+                            <li v-for="page in breadcrumbs">
+                                <div>
+                                    <span v-if="page ==='/'">/</span>
+                                    <Link
+                                        v-else
+                                        :href="page.url"
+                                        :class="{ 'text-gray-600 dark:text-gray-100': page.current }"
+                                    >{{ page.title }}</Link>
+                                </div>
+                            </li>
+                        </ol>
+                    </h2>
                 </div>
             </header>
 

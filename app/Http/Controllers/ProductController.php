@@ -129,15 +129,6 @@ class ProductController extends Controller
         return to_route('products.index')->with('success', 'Product deleted successfully');
     }
 
-    /**
-     *  Export products to excel.
-     *
-     * @return BinaryFileResponse
-     */
-    public function productsToExcel() : BinaryFileResponse
-    {
-        return Excel::download(new ProductsExport(), 'products.xlsx');
-    }
 
     //TODO: View product for user
 }

@@ -11,7 +11,7 @@
             From: "opacity-100"
             To: "opacity-0"
         -->
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity dark:bg-gray-700e dark:bg-opacity-75"></div>
 
         <div class="fixed inset-0 overflow-hidden">
             <div class="absolute inset-0 overflow-hidden">
@@ -27,14 +27,14 @@
                         To: "translate-x-full"
                     -->
                     <div class="pointer-events-auto w-screen max-w-md">
-                        <div class="flex h-full flex-col overflow-y-scroll bg-white dark:bg-gray-800 shadow-xl">
+                        <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl dark:bg-gray-800">
                             <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                                 <div class="flex items-start justify-between">
                                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-300" id="slide-over-title">
                                         Shopping cart</h2>
                                     <div class="ml-3 flex h-7 items-center">
                                         <button type="button"
-                                                class="-m-2 p-2 text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400">
+                                                class="-m-2 p-2 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400">
                                             <span class="sr-only">Close panel</span>
                                             <svg @click="closeCartSlider" class="h-6 w-6" fill="none"
                                                  viewBox="0 0 24 24" stroke-width="1.5"
@@ -79,7 +79,7 @@
 
                                                         <div class="flex">
                                                             <button @click="removeFromCart(orderItem.id)" type="button"
-                                                                    class="font-medium text-indigo-600 dark:text-sky-500 hover:text-indigo-500 dark:hover:text-sky-400">
+                                                                    class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-sky-500 dark:hover:text-sky-400">
                                                                 Remove
                                                             </button>
                                                         </div>
@@ -114,13 +114,13 @@
                                     </div>
                                     <div class="mt-6">
                                         <a @click="confirmOrder"
-                                           class="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 dark:bg-sky-600 px-6 py-3 text-base font-medium text-white dark:text-gray-800 shadow-sm hover:bg-indigo-700 dark:hover:bg-sky-500">Confirm</a>
+                                           class="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 dark:bg-sky-600 dark:text-gray-800 dark:hover:bg-sky-500">Confirm</a>
                                     </div>
                                 </div>
                                 <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                     <p>
                                         <button @click="closeCartSlider" type="button"
-                                                class="font-medium text-indigo-600 dark:text-sky-500 hover:text-indigo-500 dark:hover:text-sky-400">
+                                                class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-sky-500 dark:hover:text-sky-400">
                                             Continue Shopping
                                             <span aria-hidden="true"> &rarr;</span>
                                         </button>

@@ -2,10 +2,8 @@
     <Head title="Products"/>
     <div class="mb-4 flex justify-between">
         <div>
-            <PrimaryButton v-if="can.create" class="flex items-center">
-                <Link :href="route('products.create')">Create</Link>
-            </PrimaryButton>
-            <PrimaryButton class="ml-10" @click="download">Export</PrimaryButton>
+            <CreateButton modelName="products"/>
+            <ExportButton modelName="products"/>
         </div>
         <div class="relative">
             <input v-model="search" type="text" placeholder="Search..."
@@ -27,6 +25,8 @@ import Table from "@/Components/Table.vue";
 import {defineProps, ref, watch} from "vue";
 import {router} from '@inertiajs/vue3'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import ExportButton from "@/Components/ExportButton.vue";
+import CreateButton from "@/Components/CreateButton.vue";
 
 let props = defineProps({
     products: {
@@ -55,7 +55,7 @@ const columns = [
 ];
 let search = ref(props.filters.search);
 let download = async () => {
-    const response = await axios.get('/export/products', {
+    const response = await axios.get(route('export.products'), {
         responseType: 'blob',
     });
 

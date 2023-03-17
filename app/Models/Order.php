@@ -9,6 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $perPage = 2;
+
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);

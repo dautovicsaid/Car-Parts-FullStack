@@ -1,0 +1,52 @@
+<template>
+    <Head title="Create Product Category"/>
+    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+        <form @submit.prevent="form.post(route('users.store'))" class="space-y-5">
+            <div>
+                <InputLabel for="name" value="Name"/>
+                <TextInput
+                    id="name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.name"
+                    required
+                    autofocus
+                    autocomplete="name"
+                />
+                <InputError class="mt-2" :message="form.errors.name"/>
+            </div>
+            <div>
+                <InputLabel for="email" value="Email"/>
+                <TextInput
+                    id="email"
+                    type="email"
+                    class="mt-1 block w-full"
+                    v-model="form.email"
+                    required
+                    autofocus
+                    autocomplete="email"
+                />
+                <InputError class="mt-2" :message="form.errors.email"/>
+            </div>
+            <div class="flex items-center">
+                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+            </div>
+        </form>
+    </div>
+</template>
+<script setup>
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import InputError from "@/Components/InputError.vue";
+import TextInput from "@/Components/TextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import {useForm} from "@inertiajs/vue3";
+
+let form = useForm(
+    {
+        name: '',
+        email: '',
+    }
+)
+
+
+</script>

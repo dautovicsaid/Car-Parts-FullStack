@@ -6,6 +6,7 @@ import {createInertiaApp, Link, Head} from '@inertiajs/vue3';
 import {ZiggyVue} from '../../vendor/tightenco/ziggy/dist/vue.m';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import '@sweetalert2/theme-dark/dark.css';
+import "v3-infinite-loading/lib/style.css";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -29,6 +30,7 @@ createInertiaApp({
     title: title => title ? `${title} - ${appName}` : appName,
     progress: {
         color: '#4B5563',
+        showSpinner: true,
     },
 });
 

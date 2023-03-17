@@ -1,6 +1,6 @@
 <template>
     <Head title="Edit Product Category"/>
-    <div class="mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
+    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
         <form @submit.prevent="form.post(route('product-categories.update',{
             productCategory: props.productCategory.data.id
         }))" class="space-y-5">

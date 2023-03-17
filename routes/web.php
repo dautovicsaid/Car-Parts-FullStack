@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CarModelController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -40,9 +42,11 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => ['role:3']], function () {
 
-        // Shop
-        Route::get('/', [ShopController::class, 'index'])->name('shop.index');
+        Route::redirect('/', '/shop');
 
+        // Shop
+        Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+        Route::get('/shop/{product}', [ShopController::class, 'productShow'])->name('shop.productShow');
         // Orders
         Route::get('cart', [OrderController::class, 'showCart'])->name('cart.show');
         Route::get('orders/history', [OrderController::class, 'history'])->name('orders.history');
@@ -52,6 +56,12 @@ Route::middleware('auth')->group(function () {
 
     });
     Route::group(['middleware' => ['role:1']], function () {
+
+        // Users
+        Route::get('users', [UserController::class, 'index'])->name('users.index');
+        //Route::get('users/admin', [UserController::class, 'admin'])->name('users.index');
+        Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('users', [UserController::class, 'store'])->name('users.store');
 
         //Brands
         Route::get('brands/create', [BrandController::class, 'create'])->name('brands.create');
@@ -86,6 +96,8 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => ['role:1|2']], function () {
 
+        Route::redirect('/', '/brands');
+
         // Brands
         Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
         Route::get('brands/{brand}', [BrandController::class, 'show'])->name('brands.show');
@@ -101,7 +113,12 @@ Route::middleware('auth')->group(function () {
         //Products
         Route::get('products', [ProductController::class, 'index'])->name('products.index');
         Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
-        Route::get('export/products', [ProductController::class, 'productsToExcel'])->name('products.export');
+
+        //Exports
+        Route::get('export/brands', [ExportController::class, 'brands'])->name('export.brands');
+        Route::get('export/car-models', [ExportController::class, 'carModels'])->name('export.car-models');
+        Route::get('export/product-categories', [ExportController::class, 'productCategories'])->name('export.product-categories');
+        Route::get('export/products', [ExportController::class, 'products'])->name('export.products');
 
     });
 });

@@ -1,6 +1,6 @@
 <template>
     <Head title="Edit Brand"/>
-    <div class="mx-auto max-w-xl rounded-lg bg-white dark:bg-gray-800 p-6 shadow-md">
+    <div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
         <form @submit.prevent="form.post(route('brands.update', {
             brand : brand.data.id
         }))" class="space-y-5">

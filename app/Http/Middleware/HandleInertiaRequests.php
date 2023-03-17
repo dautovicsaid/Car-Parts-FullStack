@@ -41,7 +41,8 @@ class HandleInertiaRequests extends Middleware
                     'can' =>[
                         'shop' => fn() => $request->user()?->role_id == Role::USER_ID,
                         'admin' => fn() => $request->user()?->role_id == Role::ADMIN_ID || $request->user()?->role_id == Role::SUPER_ADMIN_ID,
-                    ]],
+                        'superAdmin' => fn() => $request->user()?->role_id == Role::SUPER_ADMIN_ID,
+                        ]],
             ],
 
             'ziggy' => function () use ($request) {
