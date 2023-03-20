@@ -25,7 +25,12 @@ class ProductCategoryService
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        return ProductCategoryResource::collection(ProductCategory::query()->search($request)->orderBy('id','desc')->paginate());
+        return ProductCategoryResource::collection(
+            ProductCategory::query()->search($request)
+                ->orderBy('id','desc')
+                ->paginate()
+                ->withQueryString()
+        );
     }
 
 

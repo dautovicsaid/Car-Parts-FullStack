@@ -5,13 +5,14 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, softDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +24,12 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'status',
+    ];
+
+    protected $casts = [
+        'status' => 'boolean',
+        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -40,9 +47,6 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
     public function role(){
         return $this->belongsTo(Role::class);
@@ -52,6 +56,9 @@ class User extends Authenticatable
         return $query->where('role_id', Role::ADMIN_ID);
     }
 
+    public function scopeUser($query){
+        return $query->where('role_id', Role::USER_ID);
+    }
     public function scopeSearch($query, $request) : Builder
     {
         return $query->when($request->search, function ($query) use ($request) {
@@ -59,4 +66,5 @@ class User extends Authenticatable
                 ->orWhere('email', 'like', '%' . $request->search . '%');
         });
     }
+
 }

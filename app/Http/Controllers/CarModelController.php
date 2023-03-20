@@ -108,7 +108,7 @@ class CarModelController extends Controller
     public function destroy(CarModel $carModel)
     {
         $this->carModelService->destroy($carModel);
-        return to_route('car-models.index')->with('success', 'Car model deleted successfully');
+        return back()->with('success', 'Car model deleted successfully');
     }
 
     public function getCarModelsByBrand(Brand $brand)

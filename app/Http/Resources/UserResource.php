@@ -20,7 +20,8 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role' => $this->whenLoaded('role', function (){
                 return $this->role->name;
-            })
+            }),
+            'status' => $this->deleted_at === null
         ];
     }
 }

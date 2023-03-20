@@ -12,7 +12,6 @@
 <script setup>
 import ProductCard from "@/Components/ProductCard.vue";
 import {ref} from "vue";
-import {router} from "@inertiajs/vue3";
 import InfiniteLoading from 'v3-infinite-loading';
 
 let page = ref(2);
@@ -24,21 +23,15 @@ let props = defineProps({
 })
 let allProducts = ref(props.products.data);
 const load = async (state) => {
-    router.visit(route('shop.index', {page: page.value}), {
-        preserveState: true,
-        preserveScroll: true,
-        replace: true,
-        only: ['products'],
-        onSuccess: () => {
-            if (props.products.data.length === 0) {
-                state.complete();
-                return;
-            }
-            allProducts.value = allProducts.value.concat(props.products.data);
-            page.value++;
-            state.loaded();
-        },
-    })
+    let response = await axios.get(route('shop.indexData', {page: page.value}))
+    let data = response.data.data;
+    if(data.length === 0) {
+        state.complete();
+        return;
+    }
+    allProducts.value = allProducts.value.concat(data);
+    page.value++;
+    state.loaded();
 }
 
 </script>

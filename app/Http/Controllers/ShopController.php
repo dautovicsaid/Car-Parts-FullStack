@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,6 +27,15 @@ class ShopController extends Controller
             'products' => ProductShopResource::collection(ProductService::productsIndexQuery($request)->paginate()),
         ]);
 
+    }
+
+    /**
+     * @param Request $request
+     * @return AnonymousResourceCollection
+     */
+    public function indexData(Request $request) : AnonymousResourceCollection
+    {
+        return ProductShopResource::collection(ProductService::productsIndexQuery($request)->paginate());
     }
 
     public function productShow(Product $product) : Response

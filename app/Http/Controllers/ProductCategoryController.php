@@ -60,7 +60,7 @@ class ProductCategoryController extends Controller
     {
         $this->productCategoryService->store($request);
 
-        return to_route('product-categories.index')->with('success', 'Product category created successfully');
+        return to_route('product-categories.index',['page' => $request->page])->with('success', 'Product category created successfully');
     }
 
     /**
@@ -116,6 +116,6 @@ class ProductCategoryController extends Controller
     public function destroy(ProductCategory $productCategory) : RedirectResponse
     {
         $this->productCategoryService->destroy($productCategory);
-        return to_route('product-categories.index')->with('success', 'Product category deleted successfully');
+        return back()->with('success', 'Product category deleted successfully');
     }
 }

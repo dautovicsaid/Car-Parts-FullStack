@@ -1,5 +1,11 @@
 <template>
     <Head title="Users"/>
+    <div>
+        <div class="mb-5 flex gap-3 text-xl text-gray-800 dark:text-gray-300">
+        <HeaderLink :active="filters.role === 'admin'" :href="route('users.index',{role:'admin'})"> Admin</HeaderLink>
+        <HeaderLink :active="filters.role === 'user'" :href="route('users.index',{role:'user'})"> User</HeaderLink>
+        </div>
+    </div>
     <div class="mb-4 flex justify-between">
         <div>
             <CreateButton model-name="users" v-if="can.create"/>
@@ -28,6 +34,7 @@ import {router} from '@inertiajs/vue3'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import CreateButton from "@/Components/CreateButton.vue";
 import ExportButton from "@/Components/ExportButton.vue";
+import HeaderLink from "@/Components/HeaderLink.vue";
 
 let props = defineProps({
     users: {
@@ -46,14 +53,16 @@ let props = defineProps({
 const columns = [
     'id',
     'name',
+    'email',
     'role',
 ];
 let search = ref(props.filters.search);
+let searchParams = new URLSearchParams(window.location.search);
 
 watch(
     search,
     (value) => {
-        router.get('/users', {search: value}, {preserveState: true});
+        router.get(route('users.index',{ 'role' : searchParams.get('role') }), {search: value}, {preserveState: true});
     },
 );
 </script>
