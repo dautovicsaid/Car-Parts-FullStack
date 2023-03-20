@@ -114,7 +114,7 @@ class BrandController extends Controller
     public function destroy(Brand $brand)
     {
         $this->brandService->destroy($brand);
-        return to_route('brands.index')->with('success', 'Brand deleted successfully');
+        return back()->with('success', 'Brand deleted successfully');
 
     }
 }

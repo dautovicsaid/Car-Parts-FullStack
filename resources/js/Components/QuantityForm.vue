@@ -42,9 +42,10 @@ let props = defineProps(
             required: true
         },
     })
+let quantity = 1;
 
 let form = useForm({
-    quantity: 1,
+    quantity: quantity,
     product_id: props.productId
 })
 

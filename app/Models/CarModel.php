@@ -10,6 +10,8 @@ class CarModel extends Model
 {
     use HasFactory;
 
+    protected $perPage = 10;
+
     /**
      * The attributes that are mass assignable.
      *

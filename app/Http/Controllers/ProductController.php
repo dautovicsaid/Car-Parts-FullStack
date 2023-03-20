@@ -126,7 +126,7 @@ class ProductController extends Controller
     public function destroy(Product $product) : RedirectResponse
     {
         $this->productService->destroy($product);
-        return to_route('products.index')->with('success', 'Product deleted successfully');
+        return back()->with('success', 'Product deleted successfully');
     }
 
 

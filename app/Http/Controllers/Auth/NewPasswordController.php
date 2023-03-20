@@ -50,8 +50,9 @@ class NewPasswordController extends Controller
         if ($status == Password::PASSWORD_RESET) {
             $user = DB::table('users')
                 ->where('email', $request->email)
-                ->first();
-            event(new PasswordReset($user));
+                ->update([
+                    'password' => bcrypt($request->password),
+                ]);
             DB::table('password_reset_tokens')
                 ->where('email', $request->email)
                 ->delete();

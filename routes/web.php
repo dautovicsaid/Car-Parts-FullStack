@@ -46,10 +46,12 @@ Route::middleware('auth')->group(function () {
 
         // Shop
         Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+        Route::get('/shop/data', [ShopController::class, 'indexData'])->name('shop.indexData');
         Route::get('/shop/{product}', [ShopController::class, 'productShow'])->name('shop.productShow');
         // Orders
         Route::get('cart', [OrderController::class, 'showCart'])->name('cart.show');
         Route::get('orders/history', [OrderController::class, 'history'])->name('orders.history');
+        Route::get('orders/history/data', [OrderController::class, 'historyData'])->name('orders.historyData');
         Route::delete('orders/{order}/order-items/{orderItem}', [OrderController::class, 'removeFromCart'])->name('orders.removeFromCart')->middleware('can:destroy,order,orderItem');
         Route::post('products/{product}/add-to-cart', [OrderController::class, 'addToCart'])->name('products.addToCart')->middleware('can:store,App\Models\Order,product');
         Route::post('orders/{order}/confirm',[OrderController::class,'confirm'])->name('orders.confirm')->middleware('can:confirm,order');
@@ -62,6 +64,7 @@ Route::middleware('auth')->group(function () {
         //Route::get('users/admin', [UserController::class, 'admin'])->name('users.index');
         Route::get('users/create', [UserController::class, 'create'])->name('users.create');
         Route::post('users', [UserController::class, 'store'])->name('users.store');
+        Route::put('users/{id}/status', [UserController::class, 'updateStatus'])->name('users.updateStatus');
 
         //Brands
         Route::get('brands/create', [BrandController::class, 'create'])->name('brands.create');

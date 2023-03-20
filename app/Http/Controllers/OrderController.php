@@ -9,7 +9,9 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class OrderController extends Controller
 {
@@ -80,11 +82,22 @@ class OrderController extends Controller
 
     }
 
-    public function history()
+    /**
+     * @return Response
+     */
+    public function history() : Response
     {
         return Inertia::render('History/Index',[
             'orders' => $this->orderService->history()
         ]);
+    }
+
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function historyData() : AnonymousResourceCollection
+    {
+        return $this->orderService->history();
     }
 
 }
