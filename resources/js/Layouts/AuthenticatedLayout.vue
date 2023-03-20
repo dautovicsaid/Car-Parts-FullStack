@@ -244,7 +244,7 @@ watchEffect(() => {
             <!-- Page Heading -->
             <header class="bg-white shadow dark:bg-gray-800">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                    <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-400">
+                    <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-300">
                         <ol class="flex gap-1">
                             <li v-for="page in breadcrumbs">
                                 <div>

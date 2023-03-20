@@ -46,7 +46,7 @@ class UserController extends Controller
                 'token' => $token,
                 'created_at' => Carbon::now(),
             ]);
-        $link = config('app.front_url') . "/reset-password?token=" . $token;
+        $link = config('app.url') . "/reset-password/" . $token . "?email=" . $user->email;
         dispatch(new SendResetPasswordEmailJob($user, $link, 'set'));
 
         return to_route('users.index')->with('success', 'User created successfully');

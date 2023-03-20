@@ -118,9 +118,7 @@
                                                 <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                                     <tr>
                                                         <td style="padding-right: 0px;padding-left: 0px;" align="center">
-
-                                                            <img align="center" border="0" src="{{config('app.url')}}/assets/mail/logo.png" alt="logo" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 57%;max-width: 342px;" width="342"/>
-
+                                                            <img align="center" border="0" src="{{config('app.url')}}/storage/assets/logo.png" alt="logo" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 57%;max-width: 342px;" width="342"/>
                                                         </td>
                                                     </tr>
                                                 </table>
