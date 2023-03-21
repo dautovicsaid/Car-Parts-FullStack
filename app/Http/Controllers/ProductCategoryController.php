@@ -27,17 +27,18 @@ class ProductCategoryController extends Controller
      */
     public function index(Request $request) : Response
     {
-        $can = auth()->user()->role_id == Role::SUPER_ADMIN_ID;
+        $superAdmin = auth()->user()->role_id == Role::SUPER_ADMIN_ID;
+        $admin = auth()->user()->role_id == Role::ADMIN_ID;
         return Inertia::render('ProductCategories/Index', [
             'productCategories' => $this->productCategoryService->index($request),
             'filters' => [
                 'search' => $request->search,
             ],
             'can' => [
-                'create' => $can,
-                'update' => $can,
-                'show' => $can,
-                'delete' => $can,
+                'create' => $superAdmin,
+                'update' => $superAdmin,
+                'show' => $admin || $superAdmin,
+                'delete' => $superAdmin,
             ],
         ]);
     }
