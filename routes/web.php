@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CarModelController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
@@ -123,6 +124,10 @@ Route::middleware('auth')->group(function () {
         Route::get('export/product-categories', [ExportController::class, 'productCategories'])->name('export.product-categories');
         Route::get('export/products', [ExportController::class, 'products'])->name('export.products');
 
+        Route::post('import/brands', [ImportController::class, 'brands'])->name('import.brands');
+        Route::post('import/car-models', [ImportController::class, 'carModels'])->name('import.car-models');
+        Route::post('import/product-categories', [ImportController::class, 'productCategories'])->name('import.product-categories');
+        Route::post('import/products', [ImportController::class, 'products'])->name('import.products');
     });
 });
 

@@ -1,5 +1,5 @@
 <template>
-    <PrimaryButton @click="download">Export</PrimaryButton>
+    <PrimaryButton class="mr-10" @click="download">Export</PrimaryButton>
 </template>
 <script setup>
 import PrimaryButton from "@/Components/PrimaryButton.vue";

@@ -30,15 +30,17 @@ class CarModelController extends Controller
      */
     public function index(Request $request): Response
     {
+        $can = auth()->user()->role_id == Role::SUPER_ADMIN_ID;
         return Inertia::render('CarModels/Index', [
             'carModels' => $this->carModelService->index($request),
             'filters' => [
                 'search' => $request->search,
             ],
             'can' => [
-                'create' => auth()->user()->role_id == Role::SUPER_ADMIN_ID,
-                'update' => auth()->user()->role_id == Role::SUPER_ADMIN_ID,
-                'delete' => auth()->user()->role_id == Role::SUPER_ADMIN_ID,
+                'create' => $can,
+                'update' => $can,
+                'show' => $can,
+                'delete' => $can,
             ],
             ]);
 

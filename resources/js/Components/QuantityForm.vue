@@ -3,7 +3,7 @@
         <h1 class="text-gray-700 dark:text-gray-300">Quantity:</h1>
         <div class="my-3 inline-flex">
             <div
-                class="cursor-pointer select-none rounded-l border bg-gray-100 px-4 py-2 hover:bg-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                class="cursor-pointer select-none rounded-r border bg-gray-100 px-4 py-2 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                 @click="decrease">
                 -
             </div>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <button
-            class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-sky-400 dark:bg-sky-500 dark:text-gray-800">
+            class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 dark:bg-sky-500 dark:text-gray-800 dark:hover:bg-sky-400">
             Add to cart
             <svg aria-hidden="true" class="-mr-1 ml-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">

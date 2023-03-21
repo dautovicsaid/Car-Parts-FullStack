@@ -28,7 +28,7 @@
                 </div>
             </ShowCard>
         </div>
-        <div class="mt-10">
+        <div class="mt-14 h-40 px-4 pb-4 shadow-lg dark:shadow-gray-700">
             <QuantityForm :productId="product.data.id"/>
         </div>
     </div>

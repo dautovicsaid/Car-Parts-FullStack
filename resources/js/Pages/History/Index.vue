@@ -18,7 +18,7 @@
                         </h3>
 
                         <div
-                            class="rounded-lg bg-gray-50 bg-gray-700 px-4 py-6 sm:space-x-6 sm:flex sm:items-center sm:justify-between sm:px-6 lg:space-x-8">
+                            class="rounded-lg bg-gray-300 px-4 py-6 dark:bg-gray-700 sm:space-x-6 sm:flex sm:items-center sm:justify-between sm:px-6 lg:space-x-8">
                             <dl class="flex-auto text-sm text-gray-600 divide-y divide-gray-200 space-y-6 dark:divide-gray-500 dark:text-gray-500 sm:divide-y-0 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-x-6 lg:w-1/2 lg:flex-none lg:gap-x-8">
                                 <div class="flex justify-between sm:block">
                                     <dt class="font-medium text-gray-900 dark:text-gray-300">Date placed</dt>
@@ -100,7 +100,7 @@
             </div>
         </div>
     </div>
-    <div class="mt-5 flex justify-center dark:text-gray-300">
+    <div v-if="orders.meta.links.length > 3" class="mt-5 flex justify-center dark:text-gray-300">
         <InfiniteLoading @infinite="load"/>
     </div>
 </template>
@@ -122,6 +122,6 @@ const load = async (state) => {
     let data = response.data.data;
     allOrders.value = [...allOrders.value, ...data];
     page.value++;
-    (data.meta.last_page === page.value) ? state.complete() : state.loaded();
+    (response.data.meta.last_page === response.data.meta.current_page) ? state.complete() : state.loaded();
 }
 </script>

@@ -18,6 +18,17 @@ const props = defineProps({
         default: () => ({})
     },
 })
+const theme = ref(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+
+watchEffect(
+    () => {
+        if (theme.value === 'dark') {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    }
+)
 
 const insertBetween = (items, insertion) => {
     return items.flatMap(
@@ -30,7 +41,6 @@ const insertBetween = (items, insertion) => {
 
 const breadcrumbs = computed(() => insertBetween(usePage().props.breadcrumbs || [], '/'))
 
-console.log(breadcrumbs.value)
 onMounted(() => {
     if (props.flash.success) {
         Swal.fire({
@@ -54,7 +64,7 @@ watchEffect(() => {
         Swal.fire({
             icon: 'success',
             title: 'Success!',
-            text: newFlash.success
+            text: newFlash.success,
         })
     } else if (newFlash.error) {
         Swal.fire({
@@ -121,15 +131,50 @@ watchEffect(() => {
                         <div class="hidden sm:ml-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
                             <div class="relative">
-                            <button v-if="$page.props.auth.user.can.shop" class="cursor-pointer dark:text-white">
+                            <button class="ml-3 rounded-lg text-sm text-gray-500 p-2.5 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                                    v-if="$page.props.auth.user.can.shop">
                                 <svg @click="showingCartSlider = true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                      viewBox="0 0 24 24"
-                                     stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                     class="h-5 w-5"
+                                     stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                           d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/>
                                 </svg>
-                                <span v-if="$page.props.order.items_count > 0" class="absolute top-1 left-4 h-5 w-5 -translate-y-1/2 transform rounded-full border-2 border-white bg-red-600 text-xs text-white dark:border-gray-800 dark:text-gray-300">{{ $page.props.order.items_count }}</span>
+                                <span v-if="$page.props.order.items_count > 0" class="absolute top-2 left-8 h-5 w-5 -translate-y-1/2 transform rounded-full border-2 border-white bg-red-600 text-xs text-white dark:border-gray-800 dark:text-gray-300">{{ $page.props.order.items_count }}</span>
                             </button>
+                                <button
+                                    id="theme-toggle"
+                                    type="button"
+                                    @click="theme = theme === 'light' ? 'dark' : 'light'"
+                                    class="ml-3 rounded-lg text-sm text-gray-500 p-2.5 hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700"
+                                >
+                                    <svg
+                                        id="theme-toggle-dark-icon"
+                                        class="h-5 w-5"
+                                        :class="{ 'hidden': theme === 'light' }"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                        ></path>
+                                    </svg>
+                                    <svg
+                                        id="theme-toggle-light-icon"
+                                        class="h-5 w-5"
+                                        :class="{ 'hidden': theme === 'dark' }"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
                                 </div>
                             <div class="relative ml-3">
                                 <Dropdown align="right" width="48">
@@ -252,7 +297,7 @@ watchEffect(() => {
                                     <Link
                                         v-else
                                         :href="page.url"
-                                        :class="{ 'text-gray-600 dark:text-gray-100': page.current }"
+                                        :class="{ 'text-indigo-700 dark:text-gray-100': page.current }"
                                     >{{ page.title }}</Link>
                                 </div>
                             </li>

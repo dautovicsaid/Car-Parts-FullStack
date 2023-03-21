@@ -24,7 +24,6 @@
             },
             error: {
                 type: String,
-                required: true
             },
             emit : {
                 type: String,

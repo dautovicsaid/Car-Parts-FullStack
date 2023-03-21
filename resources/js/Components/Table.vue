@@ -28,11 +28,11 @@
                     v-for="(column, indexColumn) in columns" :key="indexColumn">
                     {{ typeof item[column] === 'string' ? truncateString(item[column], truncateLength) : item[column] }}
                 </td>
-                <td v-if="can.show" class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 hover:text-gray-300 dark:text-gray-300 dark:hover:text-white">
+                <td v-if="can.show" class="whitespace-nowrap px-6 py-4 font-medium">
                     <div class="flex justify-center">
                         <Link :href="`${url}/${item.id}`">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5}
-                                 stroke="currentColor" class="h-6 w-6">
+                                 stroke="currentColor" class="h-6 w-6 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                       d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
                             </svg>
@@ -40,17 +40,18 @@
                     </div>
                 </td>
                 <td v-if="can.update || can.delete || can.deactivate"
-                    class="flex justify-center whitespace-nowrap px-6 py-7 font-medium text-gray-900 dark:text-gray-300">
+                    class="flex justify-center whitespace-nowrap px-6 py-7 font-medium text-gray-700 dark:text-gray-300">
                     <div class="flex gap-3">
                         <Link v-if="can.update" :href="`${url}/${item.id}/edit`"
-                              class="hover:text-gray-300 dark:hover:text-white">
+                              class="hover:text-black dark:hover:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="h-6 w-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                       d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"/>
                             </svg>
                         </Link>
-                        <button v-if="can.delete" @click="confirmAction(item.id,'Delete')">
+                        <button v-if="can.delete" @click="confirmAction(item.id,'Delete')"
+                            class="hover:text-black dark:hover:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" class="h-6 w-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"

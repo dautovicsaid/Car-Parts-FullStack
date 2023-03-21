@@ -28,15 +28,17 @@ class BrandController extends Controller
      */
     public function index(Request $request): Response
     {
+        $can = auth()->user()->role_id == Role::SUPER_ADMIN_ID;
         return Inertia::render('Brands/Index', [
                 'brands' => $this->brandService->index($request),
                 'filters' => [
                     'search' => $request->search,
                 ],
                 'can' => [
-                    'create' => auth()->user()->role_id == Role::SUPER_ADMIN_ID,
-                    'update' => auth()->user()->role_id == Role::SUPER_ADMIN_ID,
-                    'delete' => auth()->user()->role_id == Role::SUPER_ADMIN_ID,
+                    'create' => $can,
+                    'update' => $can,
+                    'show' => $can,
+                    'delete' => $can,
                 ],
             ]
         );
@@ -70,7 +72,7 @@ class BrandController extends Controller
      * @param Brand $brand
      * @return Response
      */
-    public function show(Brand $brand) : Response
+    public function show(Brand $brand): Response
     {
         return Inertia::render('Brands/Show', [
             'brand' => $this->brandService->show($brand),
