@@ -14,11 +14,8 @@ import 'vue3-toastify/dist/index.css';
 let orderId = ref(null);
 
 const options = {
-    broadcaster: 'pusher',
-    key: '7816a78dea13bf00430e',
+    key: 'PUSHER_APP_KEY',
     authEndpoint: '/broadcasting/auth',
-    cluster: 'eu',
-    forceTLS: true,
 }
 
 Echo.private('orders')
