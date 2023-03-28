@@ -25,7 +25,6 @@
 import Table from "@/Components/Table.vue";
 import {defineProps, ref, watch} from "vue";
 import {router} from '@inertiajs/vue3'
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 import CreateButton from "@/Components/CreateButton.vue";
 import ExportButton from "@/Components/ExportButton.vue";
 

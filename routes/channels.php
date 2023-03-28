@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -15,4 +16,8 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('orders', function ($user) {
+    return $user && ($user->role_id === Role::ADMIN_ID || $user->role_id === Role::SUPER_ADMIN_ID);
 });

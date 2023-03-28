@@ -1,4 +1,5 @@
 <template>
+    <div v-if="items.length > 0">
     <div
         class="relative overflow-x-auto shadow-md sm:rounded-lg"
     >
@@ -100,6 +101,14 @@
             </div>
         </div>
     </Modal>
+    </div>
+    <div v-else>
+        <div class="flex justify-center items-center h-96">
+            <h2 class="text-2xl font-medium text-gray-900 dark:text-gray-200">
+                No data found
+            </h2>
+        </div>
+    </div>
 </template>
 
 <script setup>

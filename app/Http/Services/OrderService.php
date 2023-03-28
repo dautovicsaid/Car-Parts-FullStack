@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Events\OrderConfirmedEvent;
 use App\Http\Resources\OrderResource;
 use App\Mail\OrderConfirmedMail;
 use App\Models\Order;
@@ -10,7 +11,9 @@ use Illuminate\Http\Request;
 use App\Models\OrderItem;
 use App\Traits\ImageTrait;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use App\Events\MyEvent;
 
 
 class OrderService
@@ -65,6 +68,7 @@ class OrderService
             'ordered_at' => now(),
             'total_price' => $request->total_price,
         ]);
+        event(new OrderConfirmedEvent($order));
         Mail::to(auth()->user())->queue(new OrderConfirmedMail($order));
     }
 

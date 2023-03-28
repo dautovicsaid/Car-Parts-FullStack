@@ -1,5 +1,5 @@
 <script setup>
-import {ref, watchEffect, onMounted, computed} from 'vue';
+import {ref, watchEffect, onMounted, computed, watch} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -7,8 +7,26 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import {Link, usePage} from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
-
 import Cart from "@/Components/Cart.vue";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
+let orderId = ref(null);
+
+const options = {
+    broadcaster: 'pusher',
+    key: '7816a78dea13bf00430e',
+    authEndpoint: '/broadcasting/auth',
+    cluster: 'eu',
+    forceTLS: true,
+}
+
+Echo.private('orders')
+    .listen('OrderConfirmedEvent', (e) => {
+        orderId.value = e.order.id;
+    });
+
+
 
 const showingNavigationDropdown = ref(false);
 const showingCartSlider = ref(false);
@@ -18,17 +36,29 @@ const props = defineProps({
         default: () => ({})
     },
 })
-const theme = ref(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+const theme = ref(window.localStorage.getItem('theme') || 'light')
 
 watchEffect(
     () => {
         if (theme.value === 'dark') {
             document.documentElement.classList.add('dark')
+            window.localStorage.setItem('theme', 'dark')
         } else {
             document.documentElement.classList.remove('dark')
+            window.localStorage.setItem('theme', 'light')
         }
     }
 )
+
+watch(
+    () => orderId.value,
+    (newValue,oldValue) => {
+        if(newValue !== oldValue) {
+            if (orderId.value) {
+                toast.success('New order has been placed');
+            }
+        }
+    })
 
 const insertBetween = (items, insertion) => {
     return items.flatMap(
