@@ -21,3 +21,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('orders', function ($user) {
     return $user && ($user->role_id === Role::ADMIN_ID || $user->role_id === Role::SUPER_ADMIN_ID);
 });
+
+Broadcast::channel('users', function ($user) {
+    return $user;
+});

@@ -70,6 +70,9 @@
                             </SuccessButton>
                         </div>
                     </div>
+                    <div v-if="activeUsers && activeUsers.includes(item.id)">
+                        &#128994
+                    </div>
                 </td>
             </tr>
             </tbody>
@@ -140,7 +143,10 @@ let props = defineProps({
     can: {
         type: Object,
         required: true,
-    }
+    },
+    activeUsers: {
+        type: Array,
+    },
 })
 const confirmingAction = ref(false);
 const truncateLength = 30;

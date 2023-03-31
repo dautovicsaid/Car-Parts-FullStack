@@ -55,7 +55,7 @@ class HandleInertiaRequests extends Middleware
         'error' => fn() => $request->session()->get('error'),
     ]
         ]);
-        if(auth()->user()){
+        if(auth()->user() && auth()->user()->role_id == Role::USER_ID){
             $order = Order::query()
                 ->with('orderItems')
                 ->where('user_id', $request->user()?->id)

@@ -2,10 +2,10 @@
 
 namespace App\Events;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -29,14 +29,16 @@ class OrderConfirmedEvent implements ShouldBroadcast
      *
      * @return Channel
      */
-    public function broadcastOn() : PrivateChannel
+    public function broadcastOn() : array
     {
-        return new PrivateChannel('orders');
+        return [
+            new PrivateChannel('orders')
+            ];
     }
     public function broadcastWith(): array
     {
         return [
-            'order' => $this->order,
+            'order' => OrderResource::make($this->order),
         ];
     }
 }

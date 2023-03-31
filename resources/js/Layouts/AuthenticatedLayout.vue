@@ -1,5 +1,5 @@
 <script setup>
-import {ref, watchEffect, onMounted, computed, watch} from 'vue';
+import {ref, watchEffect, onMounted, computed, watch, onUnmounted} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -11,20 +11,19 @@ import Cart from "@/Components/Cart.vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
-let orderId = ref(null);
-
+if (usePage().props.auth.user.id === 3)
+{
+    Echo.private('orders')
+        .listen('OrderConfirmedEvent', (e) => {
+            orderId.value = e.order.id;
+            order.value = e.order;
+        });
+}
+const orderId = ref(null);
 const options = {
     key: 'PUSHER_APP_KEY',
     authEndpoint: '/broadcasting/auth',
 }
-
-Echo.private('orders')
-    .listen('OrderConfirmedEvent', (e) => {
-        orderId.value = e.order.id;
-    });
-
-
-
 const showingNavigationDropdown = ref(false);
 const showingCartSlider = ref(false);
 const props = defineProps({
@@ -35,8 +34,30 @@ const props = defineProps({
 })
 const theme = ref(window.localStorage.getItem('theme') || 'light')
 
+if (usePage().props.auth.user.id !== 3)
+{
+    Echo.private('orders')
+        .listen('OrderConfirmedEvent', (e) => {
+            orderId.value = e.order.id;
+            order.value = e.order;
+        });
+}
 watchEffect(
     () => {
+        const newFlash = props.flash
+        if (newFlash.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: newFlash.success,
+            })
+        } else if (newFlash.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: newFlash.error
+            })
+        }
         if (theme.value === 'dark') {
             document.documentElement.classList.add('dark')
             window.localStorage.setItem('theme', 'dark')
@@ -82,28 +103,14 @@ onMounted(() => {
             text: props.flash.error
         })
     }
+    Echo.join('users');
 })
 
-watchEffect(() => {
-    const newFlash = props.flash
 
-    if (newFlash.success) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: newFlash.success,
-        })
-    } else if (newFlash.error) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: newFlash.error
-        })
-    }
+onUnmounted(() => {
+    Echo.leave('users');
 })
-
 </script>
-
 <template>
     <div class="min-h-screen bg-gray-100">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">

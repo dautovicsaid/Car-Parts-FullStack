@@ -10,10 +10,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Pusher\Pusher;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,25 +31,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
-    Route::post('/broadcasting/auth', function (Request $request) {
-        $socketId = $request->input('socket_id');
-        $channelName = $request->input('channel_name');
-
-        if (auth()->user()->role_id === 3){
-            return response()->json(['error' => 'Not authorized.'], 403);
-        }
-
-        $appKey = env('PUSHER_APP_KEY');
-        $appSecret = env('PUSHER_APP_SECRET');
-
-        $authString = "{$socketId}:{$channelName}";
-        $authSignature = hash_hmac('sha256', $authString, $appSecret);
-
-        $auth = "{$appKey}:{$authSignature}";
-
-        return response()->json(['auth' => $auth]);
-    });
 
     Route::group(['middleware' => ['role:1|2|3']], function () {
 

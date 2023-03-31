@@ -2,8 +2,9 @@
     <Head title="Users"/>
     <div>
         <div class="mb-5 flex gap-3 text-xl text-gray-800 dark:text-gray-300">
-        <HeaderLink :active="filters.role === 'admin'" :href="route('users.index',{role:'admin'})"> Admin</HeaderLink>
-        <HeaderLink :active="filters.role === 'user'" :href="route('users.index',{role:'user'})"> User</HeaderLink>
+            <HeaderLink :active="filters.role === 'admin'" :href="route('users.index',{role:'admin'})"> Admin
+            </HeaderLink>
+            <HeaderLink :active="filters.role === 'user'" :href="route('users.index',{role:'user'})"> User</HeaderLink>
         </div>
     </div>
     <div class="mb-4 flex justify-between">
@@ -23,13 +24,13 @@
             </button>
         </div>
     </div>
-    <Table :can="can" :items="users.data" :columns="columns" :links="users.meta.links"
+    <Table :activeUsers="activeUsers" :can="can" :items="users.data" :columns="columns" :links="users.meta.links"
            :url="$page.url.split('?')[0]"/>
 </template>
 
 <script setup>
 import Table from "@/Components/Table.vue";
-import {defineProps, ref, watch} from "vue";
+import {defineProps, onMounted, ref, watch} from "vue";
 import {router} from '@inertiajs/vue3'
 import CreateButton from "@/Components/CreateButton.vue";
 import ExportButton from "@/Components/ExportButton.vue";
@@ -55,13 +56,32 @@ const columns = [
     'email',
     'role',
 ];
+const activeUsers = ref([]);
 let search = ref(props.filters.search);
 let searchParams = new URLSearchParams(window.location.search);
 
+onMounted(() => {
+    Echo.join('users')
+        .here((users) => {
+            console.log(users)
+            activeUsers.value = users.map((user) => user.id);
+        })
+        .joining((user) => {
+            activeUsers.value = [...activeUsers.value, user.id];
+        })
+        .leaving((user) => {
+            activeUsers.value = activeUsers.value.filter((id) => id !== user.id);
+        });
+});
+
+function clearSearch() {
+    search.value = '';
+    router.get(route('users.index', {'role': searchParams.get('role')}), {search: ''}, {preserveState: true});
+}
 watch(
     search,
     (value) => {
-        router.get(route('users.index',{ 'role' : searchParams.get('role') }), {search: value}, {preserveState: true});
+        router.get(route('users.index', {'role': searchParams.get('role')}), {search: value}, {preserveState: true});
     },
 );
 </script>
