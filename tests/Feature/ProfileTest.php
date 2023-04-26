@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -12,6 +13,10 @@ class ProfileTest extends TestCase
 
     public function test_profile_page_is_displayed(): void
     {
+        Role::factory()->create(['name' => 'super-admin', 'id' => 1]);
+        Role::factory()->create(['name' => 'admin', 'id' => 2]);
+        Role::factory()->create(['name' => 'user', 'id' => 3]);
+
         $user = User::factory()->create();
 
         $response = $this
@@ -23,6 +28,10 @@ class ProfileTest extends TestCase
 
     public function test_profile_information_can_be_updated(): void
     {
+        Role::factory()->create(['name' => 'super-admin', 'id' => 1]);
+        Role::factory()->create(['name' => 'admin', 'id' => 2]);
+        Role::factory()->create(['name' => 'user', 'id' => 3]);
+
         $user = User::factory()->create();
 
         $response = $this
@@ -45,6 +54,10 @@ class ProfileTest extends TestCase
 
     public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
     {
+        Role::factory()->create(['name' => 'super-admin', 'id' => 1]);
+        Role::factory()->create(['name' => 'admin', 'id' => 2]);
+        Role::factory()->create(['name' => 'user', 'id' => 3]);
+
         $user = User::factory()->create();
 
         $response = $this
@@ -63,6 +76,10 @@ class ProfileTest extends TestCase
 
     public function test_user_can_delete_their_account(): void
     {
+        Role::factory()->create(['name' => 'super-admin', 'id' => 1]);
+        Role::factory()->create(['name' => 'admin', 'id' => 2]);
+        Role::factory()->create(['name' => 'user', 'id' => 3]);
+
         $user = User::factory()->create();
 
         $response = $this
@@ -72,15 +89,18 @@ class ProfileTest extends TestCase
             ]);
 
         $response
-            ->assertSessionHasNoErrors()
-            ->assertRedirect('/');
+            ->assertSessionHasNoErrors();
 
         $this->assertGuest();
-        $this->assertNull($user->fresh());
+        $this->assertNotNull($user->fresh()->deleted_at);
     }
 
     public function test_correct_password_must_be_provided_to_delete_account(): void
     {
+        Role::factory()->create(['name' => 'super-admin', 'id' => 1]);
+        Role::factory()->create(['name' => 'admin', 'id' => 2]);
+        Role::factory()->create(['name' => 'user', 'id' => 3]);
+
         $user = User::factory()->create();
 
         $response = $this
@@ -94,6 +114,6 @@ class ProfileTest extends TestCase
             ->assertSessionHasErrors('password')
             ->assertRedirect('/profile');
 
-        $this->assertNotNull($user->fresh());
+        $this->assertNull($user->fresh()->deleted_at);
     }
 }

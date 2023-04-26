@@ -2,9 +2,12 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\Role;
 use App\Models\User;
+use Database\Factories\PasswordResetFactory;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
@@ -23,6 +26,8 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
+        Role::factory()->create();
+
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);
@@ -33,6 +38,8 @@ class PasswordResetTest extends TestCase
     public function test_reset_password_screen_can_be_rendered(): void
     {
         Notification::fake();
+
+        Role::factory()->create();
 
         $user = User::factory()->create();
 
@@ -51,13 +58,18 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
+        Role::factory()->create(['name' => 'super-admin', 'id' => 1]);
+        Role::factory()->create(['name' => 'admin', 'id' => 2]);
+        Role::factory()->create(['name' => 'user', 'id' => 3]);
+
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
+        Notification::assertSentTo($user, ResetPassword::class, function () use ($user) {
+            $token = DB::table('password_reset_tokens')->select("*")->where('email', $user->email)->get();
             $response = $this->post('/reset-password', [
-                'token' => $notification->token,
+                'token' => $token[0]->token,
                 'email' => $user->email,
                 'password' => 'password',
                 'password_confirmation' => 'password',
